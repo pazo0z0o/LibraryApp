@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interfaces
 {
-    public interface IBookRepo
+    public interface IBookRepo<TEntity>
     {
+        Task<TEntity> GetById(int id);
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<TEntity> Add(TEntity entity);
+        Task<TEntity> Update(TEntity entity); //get by id call first
+        Task<TEntity> Delete(int id);
     }
 }

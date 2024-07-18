@@ -1,0 +1,75 @@
+Create Table Books
+(
+id int IDENTITY(1,1) PRIMARY KEY,
+title varchar(200),
+author varchar(200),
+isbn varchar(10),
+publishedDate DATE ,
+price MONEY,
+quantity int
+);
+====================================
+CREATE PROCEDURE sp_Book_Create
+    @title VARCHAR(200),
+    @author VARCHAR(200),
+    @isbn VARCHAR(10),
+    @publishedDate DATE,
+    @price MONEY,
+    @quantity INT,
+    @newId INT OUTPUT  
+AS
+BEGIN
+    INSERT INTO Books (title, author, isbn, publishedDate, price, quantity)
+    VALUES (@title, @author, @isbn, @publishedDate, @price, @quantity);
+
+    SET @newId = SCOPE_IDENTITY();  
+END
+GO
+=====================================
+CREATE PROCEDURE sp_Book_Update
+    @id INT,
+    @title VARCHAR(200),
+    @author VARCHAR(200),
+    @isbn VARCHAR(10),
+    @publishedDate DATE,
+    @price MONEY,
+    @quantity INT
+AS
+BEGIN
+    UPDATE Books
+    SET title = @title,
+        author = @author,
+        isbn = @isbn,
+        publishedDate = @publishedDate,
+        price = @price,
+        quantity = @quantity
+    WHERE id = @id;
+END
+GO
+========================================
+CREATE PROCEDURE sp_Book_Delete
+    @id INT
+AS
+BEGIN
+    DELETE FROM Books
+    WHERE id = @id;
+END
+GO
+========================================
+CREATE PROCEDURE sp_Book_GetAll
+AS
+BEGIN
+    SELECT id, title, author, isbn, publishedDate, price, quantity
+    FROM Books;
+END
+GO
+========================================
+CREATE PROCEDURE sp_Book_GetById
+    @id INT
+AS
+BEGIN
+    SELECT id, title, author, isbn, publishedDate, price, quantity
+    FROM Books
+    WHERE id = @id;
+END
+GO
