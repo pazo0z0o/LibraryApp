@@ -1,3 +1,6 @@
+using DataAccess.Interfaces;
+using DataAccess.Repositories;
+using DataModels.Models;
 using Serilog;
 
 
@@ -16,10 +19,11 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
 
-
+builder.Host.UseSerilog();
+builder.Services.AddSingleton<IBookRepo<Book>,BookRepo>();
+builder.Services.AddSingleton<BogusBooks>();
 // Add services to the container.
-
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 
 
 // Add services to the container.
@@ -43,10 +47,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-app.MapControllerRoute
-    (
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
-    );
+app.MapControllers();
+    //(
+    //name: "default",
+    //pattern: "{controller=Home}/{action=Index}/{id?}"
+    //);
 
 app.Run();

@@ -5,3 +5,5 @@ Repository pattern with generic interface, probably rename the interface
 Stored procedures must require all parameters from the dapper calls
 Check if I can Implement Bogus at the start without triggering through a button and have the db clear at closing (50) results is enough
 Add DataAnnotations to enforce validation in razor pages ( isbn needs only 10 numbers => [^0-9] , [StringLength(10)]
+
+--Add dependencies in service containter in program.cs (bogus,book => singleton is okay , sqlConnection => scoped , httpclient (factory) X 

@@ -8,9 +8,9 @@ namespace DataModels.DTO
 {
     public class BookCreateDTO
     {
-        public string author { get; set; }
-        public string title { get; set; }
-        public string ISBN { get; set; }
+        public string? author { get; set; }
+        public string? title { get; set; }
+        public string? Isbn { get; set; }
         public DateTime? publishedDate { get; set; }
         public int quantity { get; set; }
         public decimal price { get; set; }
