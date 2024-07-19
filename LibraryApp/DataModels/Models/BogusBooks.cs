@@ -42,7 +42,7 @@ namespace DataModels.Models
     };
 
         public List<Book> GenerateBooks(int count)
-        {
+        { //TODO: Decide where I would call the Dapper call to place them in the db
             var faker = new Faker<Book>()
                 .RuleFor(b => b.Id, f => f.IndexFaker)
                 .RuleFor(b => b.Title, f => f.PickRandom(BookTitles))
