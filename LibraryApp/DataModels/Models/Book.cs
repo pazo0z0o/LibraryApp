@@ -12,23 +12,23 @@ namespace DataModels.Models
     public class Book
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Author name is required")]
         [DisplayName("Author Name")]
         public string? Author { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Book title is required")]
         [DisplayName("Book Title")]
         public string? Title {get;set;}
-        [Required]
+        [Required(ErrorMessage = "ISBN code is required")]
         [DisplayName("ISBN")]
         [StringLength(10)]
         public string? Isbn {get;set;}
-        [Required]
+        [Required(ErrorMessage = "Publication date of book is required")]
         [DisplayName("Publication Date")]
         public DateTime? PublishedDate { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Quantity in stock is required")]
         [DisplayName("In stock")]
         public int Quantity { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Price of book is required")]
         [DisplayName("Price")]
         public decimal Price { get; set; }
 
