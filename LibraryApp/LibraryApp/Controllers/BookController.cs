@@ -1,83 +1,52 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataModels.Models;
 using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace LibraryApp.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BookController : Controller
     {
-        // GET: BookController
-        public ActionResult Index()
+        // GET: api/<BookController>
+        [HttpGet]
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
-            return View();
+
+
+            return Ok();
         }
 
-        // GET: BookController/Details/5
-        public ActionResult Details(int id)
+        // GET api/<BookController>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            return View();
+            return Ok();
         }
 
-        // GET: BookController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: BookController/Create
+        // POST api/<BookController>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult>Post([FromBody] Book book)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Ok(book);
         }
 
-        // GET: BookController/Edit/5
-        public ActionResult Edit(int id)
+        // PUT api/<BookController>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] string value)
         {
-            return View();
+
+            return Ok();
         }
 
-        // POST: BookController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // DELETE api/<BookController>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: BookController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: BookController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Ok();
         }
     }
 }
