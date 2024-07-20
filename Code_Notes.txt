@@ -1,9 +1,20 @@
 C# segments for ReadMe
 
-
+Add Serilog logger and try catch to get the exception messages in console
 Repository pattern with generic interface, probably rename the interface
 Stored procedures must require all parameters from the dapper calls
-Check if I can Implement Bogus at the start without triggering through a button and have the db clear at closing (50) results is enough
+Check if I can Implement Bogus at the start without triggering through a button and disable it after. (15) results is enough - BULKINSERT
 Add DataAnnotations to enforce validation in razor pages ( isbn needs only 10 numbers => [^0-9] , [StringLength(10)]
+Null checks from Dapper Calls will be handled at the controlles
 
---Add dependencies in service containter in program.cs (bogus,book => singleton is okay , sqlConnection => scoped , httpclient (factory) X 
+--Add dependencies in service containter in program.cs (bogus,book => singleton is okay , sqlConnection => scoped , httpclient (factory) 
+
+Table will contain edit, delete buttons in each row and Create button on top. 
+Implement Back buttons => will return to the Book page where the GetAll table of books resides
+Create and Edit might be the same page( For update: check by id and if it exists, keep placeholders in a form and change ( on submit => insert )
+Paginationm Sorting And Search(Tutorial as in the README (Resources used)) and Sorting Server side ( if possible ) => will end up using an event listener on the table and itterate for search most probably
+												   => on search string submit, go to onSearch call in cshtml.cs and either search the db
+												      with LIKE SQL + dapper call OR search the Model itterative with LINQ and Contains 
+												   => CONVERT TO UPPER OR LOWER to make it case insensitive, trim whitespaces start and end
+
+												   
