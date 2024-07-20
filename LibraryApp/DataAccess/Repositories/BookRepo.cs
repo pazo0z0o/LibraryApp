@@ -147,8 +147,3 @@ namespace DataAccess.Repositories
         }
     }
 }
-//GetAll = "sp_Book_Get";
-//CreateBook = "sp_Book_Create";
-//GetById = "sp_Book_GetById";
-//UpdateBook = "sp_Book_Update";
-//DeleteBook = "sp_Book_Delete";

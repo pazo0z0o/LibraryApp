@@ -12,7 +12,7 @@ namespace LibraryApp.Pages
         private readonly IHttpClientFactory _httpClientFactory;
         public string ErrorMessage { get; set; }
 
-        public PostEditModel(IHttpClientFactory httpClientFactory, ILogger logger)
+        public PostEditModel(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }

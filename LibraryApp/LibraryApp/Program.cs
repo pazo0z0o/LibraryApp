@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 //take the Controller Uri for the http client service registration
-var localhost = configuration.GetSection("HttpClient").GetValue<string>("localhost");
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -22,9 +21,11 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 
 // Add services to the container.
+//register httpClient with address from appsettings
+var localhost = configuration.GetSection("HttpClient").GetValue<string>("localhost");
 builder.Services.AddHttpClient("BookController", client =>
 {
-    client.BaseAddress = new Uri("localhost");  
+    client.BaseAddress = new Uri(localhost);  
 });
 
 builder.Services.AddSingleton<IBookRepo<Book>, BookRepo>();
