@@ -10,7 +10,7 @@ namespace DataModels.Models
     public class BogusBooks
     {
         private static readonly List<string> BookTitles = new List<string>
-    {
+        {
         "The Great Gatsby",
         "To Kill a Mockingbird",
         "1984",

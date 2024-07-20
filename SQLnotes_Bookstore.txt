@@ -73,3 +73,10 @@ BEGIN
     WHERE id = @id;
 END
 GO
+
+
+==========================================
+Reduced priviledges account
+--Sql Authentication
+user: BookstoreAdmin
+password: !1234@qwer#3

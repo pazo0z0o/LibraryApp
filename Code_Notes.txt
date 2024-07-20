@@ -8,7 +8,7 @@ Add DataAnnotations to enforce validation in razor pages ( isbn needs only 10 nu
 Null checks from Dapper Calls will be handled at the controlles
 
 --Add dependencies in service containter in program.cs (bogus,book => singleton is okay , sqlConnection => scoped , httpclient (factory) 
-
+Inject pages in the _layout.cshtml 
 Table will contain edit, delete buttons in each row and Create button on top. 
 Implement Back buttons => will return to the Book page where the GetAll table of books resides
 Create and Edit might be the same page( For update: check by id and if it exists, keep placeholders in a form and change ( on submit => insert )

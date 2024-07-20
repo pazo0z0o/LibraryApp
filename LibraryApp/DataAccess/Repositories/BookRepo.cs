@@ -7,26 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using System.Data.SqlClient;
-using Serilog;
+using System.Data.SqlClient; 
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace DataAccess.Repositories
 {
     public class BookRepo : IBookRepo<Book>
     { //TODO: make them async-await when calling to the db
 
-        private readonly string _connectionString;
-        private readonly Serilog.ILogger _logger;
+        private readonly IConfiguration _config;
+        private readonly ILogger<BookRepo> _logger;
 
-        public BookRepo(string connectionString, ILogger logger)
+       
+        public BookRepo(IConfiguration configuration, ILogger<BookRepo> logger)
         {
-            _connectionString = connectionString;
+            _config = configuration;
             _logger = logger;
         }
 
         private IDbConnection CreateConnection()
         {
-            return new SqlConnection(_connectionString);
+            var connectionString = _config.GetConnectionString("GuestConnection");
+            return new SqlConnection(connectionString);
         }
 
         public async Task<Book> GetById(int id)
@@ -41,13 +45,13 @@ namespace DataAccess.Repositories
                    new { id = id },
                    commandType: CommandType.StoredProcedure);
 
-                    _logger.Information("GetById operation completed successfully");
+                    _logger.LogInformation("GetById operation completed successfully");
 
                 }
                 catch (Exception ex)
                 {
 
-                _logger.Error("Error at call GetById.", ex.Message);
+                _logger.LogError("Error at call GetById.", ex.Message);
                 
                 }
             }
@@ -67,10 +71,10 @@ namespace DataAccess.Repositories
 
                     if (allBooks.Any())
                     {
-                        _logger.Information($"BookRepo.GetAll call has been successfull");
+                        _logger.LogInformation($"BookRepo.GetAll call has been successfull");
                     }
                 }
-                catch (Exception ex) { _logger.Error("Error during BookRepo.GetAll call", ex.Message); }
+                catch (Exception ex) { _logger.LogError("Error during BookRepo.GetAll call", ex.Message); }
             }
             return allBooks; 
         }
@@ -86,11 +90,11 @@ namespace DataAccess.Repositories
                    Procedures.CreateBook,
                    new { title = entity.Title, author = entity.Author, isbn = entity.Isbn, publishedDate = entity.PublishedDate, price = entity.Price, quantity = entity.Quantity },
                    commandType: CommandType.StoredProcedure);
-                    _logger.Information($"Book with title:  {newBook.Title} has been created");
+                    _logger.LogInformation($"Book with title:  {newBook.Title} has been created");
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error("Error during BookRepo.Add call", ex.Message);
+                    _logger.LogError("Error during BookRepo.Add call", ex.Message);
 
                 }
 
@@ -109,12 +113,12 @@ namespace DataAccess.Repositories
                     Procedures.UpdateBook,
                     new { id = entity.Id, title = entity.Title, author = entity.Author, isbn = entity.Isbn, publishedDate = entity.PublishedDate, price = entity.Price, quantity = entity.Quantity },
                     commandType: CommandType.StoredProcedure);
-                    _logger.Information($"Book with {entity.Id} successfully updated: ");
+                    _logger.LogInformation($"Book with {entity.Id} successfully updated: ");
 
                 }
                 catch (Exception ex )
                 {
-                    _logger.Error("Error during BookRepo.Update call", ex.Message);
+                    _logger.LogError("Error during BookRepo.Update call", ex.Message);
 
                 }
                 return updatedBook;
@@ -131,12 +135,12 @@ namespace DataAccess.Repositories
                                        Procedures.DeleteBook,
                                        new { id = id },
                                        commandType: CommandType.StoredProcedure);
-                    _logger.Information($"Book with {id} successfully deleted");
+                    _logger.LogInformation($"Book with {id} successfully deleted");
 
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error("Error during BookRepo.Delete call", ex.Message);
+                    _logger.LogError("Error during BookRepo.Delete call", ex.Message);
                 }
                
             }
