@@ -88,11 +88,6 @@ namespace LibraryApp.Controllers
                 return StatusCode(500, "Internal Error");
             }
 
-            if (newBook == null)
-            {
-                return NotFound("Book not found.");
-            }
-
             return Ok(newBook);
         }
 
@@ -124,7 +119,7 @@ namespace LibraryApp.Controllers
         }
 
         // DELETE api/<BookController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id,CancellationToken cancel)
         {
          
