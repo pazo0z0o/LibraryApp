@@ -84,7 +84,7 @@ namespace LibraryApp.Controllers
         [HttpPost]
         public async Task<IActionResult>Post([FromBody] Book createdBook)
         {
-            var newBook = new Book();
+           
             try
             {
                  await _bookRepo.Add(createdBook);
@@ -96,7 +96,7 @@ namespace LibraryApp.Controllers
                 return StatusCode(500, "Internal Error");
             }
 
-            return Ok(newBook);
+            return Ok();
         }
 
         // PUT api/<BookController>/5
