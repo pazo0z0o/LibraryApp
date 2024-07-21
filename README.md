@@ -30,11 +30,11 @@ Below I list all features, helpful links, and installation steps for the project
 
 Use Insomnia or Postman to hit the API Controller Endpoints. Select the appropriate call first:
 
-- GET /books: Retrieve a list of all books [Paginated](http://localhost:5062/api/book?pageNumber=1&pageSize=10)
-- GET /books/:id: Retrieve details of a specific book by its ID [Example](http://localhost:5062/api/book/1)
-- POST /books: Add a new book [Add Book](http://localhost:5062/api/book/)
-- PUT /books/:id: Update an existing book by its ID [Update Book](http://localhost:5062/api/book/1)
-- DELETE /books/:id: Delete a book by its ID [Delete Book](http://localhost:5062/api/book/1)
+- GET /books: Retrieve a list of all books : (http://localhost:5062/api/book?pageNumber=1&pageSize=10)
+- GET /books/:id: Retrieve details of a specific book by its ID : (http://localhost:5062/api/book/1)
+- POST /books: Add a new book : (http://localhost:5062/api/book/)
+- PUT /books/:id: Update an existing book by its ID : (http://localhost:5062/api/book/1)
+- DELETE /books/:id: Delete a book by its ID : (http://localhost:5062/api/book/1)
 
 ## Setup Used
 
