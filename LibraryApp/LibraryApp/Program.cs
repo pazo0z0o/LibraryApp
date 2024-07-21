@@ -40,6 +40,13 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAuthentication("Cookie")
+       .AddCookie("Cookie", config =>
+       {
+           config.Cookie.Name = "UserLoginCookie";
+           config.LoginPath = "/Index";
+       });
+
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
@@ -63,7 +70,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseCors("OpenCorsPolicy");
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

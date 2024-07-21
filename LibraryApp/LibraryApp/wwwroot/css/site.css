@@ -20,3 +20,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+table {
+    table-layout: auto;
+    width: 100%;
+}
+thead {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+th, td {
+    max-width: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+td {
+    width: auto !important; 
+    height: fit-content !important;
+}

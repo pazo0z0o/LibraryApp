@@ -3,8 +3,36 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@using DataModels.Models;
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome To BookStore X</h1>
+    </br>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center">
+    <form method="post">
+   
+    <div class="form-group row">
+        <label asp-for="SampleUser.UserName" class="text-lg-start"></label>
+        <input asp-for="SampleUser.UserName" class="form-control form-control-sm" />
+        <span asp-validation-for="SampleUser.UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="SampleUser.Password"class="text-lg-start" >Password</label>
+        <input asp-for="SampleUser.Password" type="password"class="form-control form-control-sm" />
+        <span asp-validation-for="SampleUser.Password" class="text-danger"></span>
+    </div class>
+    </br>
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+    </form>
+        </div>
+    </div>
+</div>
 </div>
