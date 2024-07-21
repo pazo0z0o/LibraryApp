@@ -11,8 +11,8 @@ namespace DataAccess.Interfaces
     {
         Task<TEntity> GetById(int id);
         Task<IEnumerable<TEntity>> GetAll();
-        Task<TEntity> Add(TEntity entity);
-        Task<TEntity> Update(TEntity entity); //get by id call first
+        Task Add(TEntity entity);
+        Task Update(TEntity entity); //get by id call first
         Task Delete(int id);
     }
 }

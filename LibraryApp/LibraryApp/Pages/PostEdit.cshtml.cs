@@ -66,8 +66,12 @@ namespace LibraryApp.Pages
                 ErrorMessage = "Failed to create book.";
                 return RedirectToPage("/Books");
             }
+            else 
+            {
+                return RedirectToPage("/Books");
+            }
 
-            return Page();
+        
         }
     }
 }

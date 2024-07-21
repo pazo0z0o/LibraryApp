@@ -28,15 +28,24 @@ builder.Services.AddHttpClient("BookController", client =>
     client.BaseAddress = new Uri(localhost);  
 });
 
-builder.Services.AddSingleton<IBookRepo<Book>, BookRepo>();
+builder.Services.AddScoped<IBookRepo<Book>, BookRepo>();
 builder.Services.AddSingleton<BogusBooks>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("OpenCorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -48,18 +57,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors("OpenCorsPolicy");
 
 app.UseAuthorization();
 
 app.MapRazorPages();
-app.MapControllers();
-    //(
-    //name: "default",
-    //pattern: "{controller=Home}/{action=Index}/{id?}"
-    //);
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+    
 
 app.Run();

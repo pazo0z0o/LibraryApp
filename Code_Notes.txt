@@ -18,3 +18,42 @@ Paginationm Sorting And Search(Tutorial as in the README (Resources used)) and S
 												   => CONVERT TO UPPER OR LOWER to make it case insensitive, trim whitespaces start and end
 
 												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+												   
+Docker
+docker pull username/LibraryApp:latest
+												   
+												   
+												   
+												   
+Sources that helped
+
+https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-8.0&tabs=visual-studio%2Clinux-ubuntu
+https://www.learndapper.com/bulk-operations/bulk-insert
+https://learn.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
+https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_filters_table&stacked=h											   
+https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_filters_table&stacked=h											   

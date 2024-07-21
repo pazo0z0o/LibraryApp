@@ -2,7 +2,9 @@
 using DataModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using ILogger = Serilog.ILogger;
+using Microsoft.Extensions.Logging;
+using System.Drawing.Printing;
+using static System.Reflection.Metadata.BlobBuilder;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +15,10 @@ namespace LibraryApp.Controllers
     public class BookController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ILogger _logger;
+        private readonly ILogger<BookController> _logger;
         private readonly IBookRepo<Book> _bookRepo;
 
-        public BookController(IConfiguration configuration,ILogger logger, IBookRepo<Book> bookRepo)
+        public BookController(IConfiguration configuration,ILogger<BookController> logger, IBookRepo<Book> bookRepo)
         {
             _logger = logger;
             _configuration = configuration;
@@ -25,27 +27,33 @@ namespace LibraryApp.Controllers
 
         // GET: api/<BookController>
         [HttpGet]
-        public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        public async Task<IActionResult> Get(CancellationToken cancellationToken ,int pageNumber = 1, int pageSize = 10)
         {
-            IEnumerable<Book> bookList  = null;
+            
             try
             {
-                bookList = await _bookRepo.GetAll();
+                var bookList = await Task.Run(() => _bookRepo.GetAll());
+
                 bookList.ToList();
+                var totalCount = bookList.Count();
+                if (bookList == null || !bookList.Any())
+                {
+                    return NotFound("No books found.");
+                }
+                //(pageNumber -1 )* pageSize = 0 always):
+                //used to set it from the start while also giving concrete values to our 2 parameters
+                //pageNumber and pageSize at the function signature
+                var paginatedList = bookList.Skip((pageNumber-1)* pageSize).Take(pageSize).ToList();
+                Response.Headers.Add("X-Total-Count", totalCount.ToString());
+
+                return Ok(paginatedList);
             }
             catch (Exception ex)
             {
 
-                _logger.Information("Failure to procure the full booklist!" ,ex.Message);
+                _logger.LogError("Failure to procure the full booklist!" ,ex.Message);
                 return StatusCode(500, "Internal Error");
             }
-
-            if (bookList == null || !bookList.Any())
-            {
-                return NotFound("No books found.");
-            }
-
-            return Ok();
         }
 
         // GET api/<BookController>/5
@@ -60,7 +68,7 @@ namespace LibraryApp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Information($"Failure to procure the book with {id}!", ex.Message);
+                _logger.LogError($"Failure to procure the book with {id}!", ex.Message);
                 return StatusCode(500, "Internal Error");
             }
 
@@ -79,12 +87,12 @@ namespace LibraryApp.Controllers
             var newBook = new Book();
             try
             {
-                newBook = await _bookRepo.Add(createdBook);
-                _logger.Information($"Book Created Successfully");
+                 await _bookRepo.Add(createdBook);
+                _logger.LogInformation($"Book Created Successfully");
             }
             catch (Exception ex)
             {
-                _logger.Information($"Failure to create book.", ex.Message);
+                _logger.LogError($"Failure to create book.", ex.Message);
                 return StatusCode(500, "Internal Error");
             }
 
@@ -93,44 +101,39 @@ namespace LibraryApp.Controllers
 
         // PUT api/<BookController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, CancellationToken cancel)
+        public async Task<IActionResult> Put(int id,[FromBody] Book updatedBook, CancellationToken cancel)
         {
-            var updatedBook = new Book();
-            try
+            if (updatedBook == null || updatedBook.Id != id)
             {
-                var tempBook = await _bookRepo.GetById(id);
-                updatedBook = await _bookRepo.Update(tempBook);
-                _logger.Information($"Book updated successfully");
+                return BadRequest("Invalid book");
+            }
+            try
+            {   
+            //    tempBook = await _bookRepo.GetById(id);
+                await _bookRepo.Update(updatedBook);
+                _logger.LogInformation($"Book updated successfully");
             }
             catch (Exception ex)
             {
-                _logger.Information($"Failure to update book with title: {updatedBook}.", ex.Message);
+                _logger.LogError($"Failure to update book with title: {updatedBook.Id}.", ex.Message);
                 return StatusCode(500, "Internal Error");
             }
-
-            if (updatedBook == null)
-            {
-                return Ok("Failed to update book");
-            }
-
-            return Ok(updatedBook);
-
-            
+            return Ok(updatedBook);   
         }
 
         // DELETE api/<BookController>/5
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id,CancellationToken cancel)
         {
          
             try
             {
                 await _bookRepo.Delete(id);
-                _logger.Information($"Book with id: {id} deleted successfully");
+                _logger.LogInformation($"Book with id: {id} deleted successfully");
             }
             catch (Exception ex)
             {
-                _logger.Information($"Failure to delete book with id: {id}", ex.Message);
+                _logger.LogError($"Failure to delete book with id: {id}", ex.Message);
                 return StatusCode(500, "Internal Error");
             }
 

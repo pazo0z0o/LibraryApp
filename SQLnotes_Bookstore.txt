@@ -80,3 +80,9 @@ Reduced priviledges account
 --Sql Authentication
 user: BookstoreAdmin
 password: !1234@qwer#3
+
+--Had to give priviledges again after an update
+USE BookStore;
+GO
+GRANT INSERT, UPDATE ON [dbo].[Books] TO BookstoreAdmin;
+GO

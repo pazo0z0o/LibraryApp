@@ -65,9 +65,11 @@ namespace DataAccess.Repositories
             {
                 try
                 {
-                        allBooks = await connection.QueryAsync<Book>(
+                    
+                    allBooks = await connection.QueryAsync<Book>(
                         Procedures.GetAll,
                         commandType: CommandType.StoredProcedure);
+                    allBooks.ToList();
 
                     if (allBooks.Any())
                     {
@@ -79,7 +81,7 @@ namespace DataAccess.Repositories
             return allBooks; 
         }
 
-        public async Task<Book> Add(Book entity)
+        public async Task Add(Book entity)
         {
             var newBook = new Book();
             using (var connection = CreateConnection())
@@ -99,12 +101,12 @@ namespace DataAccess.Repositories
                 }
 
             }
-            return newBook;
+            
         }
 
-        public async Task<Book> Update(Book entity)
+        public async Task Update(Book entity)
         {
-            var updatedBook = new Book();
+            
             using (var connection = CreateConnection())
             {   
                 try
@@ -121,7 +123,7 @@ namespace DataAccess.Repositories
                     _logger.LogError("Error during BookRepo.Update call", ex.Message);
 
                 }
-                return updatedBook;
+                
             }
         }
 

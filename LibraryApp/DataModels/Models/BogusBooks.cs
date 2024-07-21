@@ -42,14 +42,16 @@ namespace DataModels.Models
     };
 
         public List<Book> GenerateBooks(int count)
-        { //TODO: Decide where I would call the Dapper call to place them in the db
+        {
             var faker = new Faker<Book>()
                 .RuleFor(b => b.Id, f => f.IndexFaker)
                 .RuleFor(b => b.Title, f => f.PickRandom(BookTitles))
                 .RuleFor(b => b.Author, f => f.Person.FullName)
-                .RuleFor(b => b.Isbn, f => f.Lorem.Random.Number(10).ToString())
-                .RuleFor(b => b.PublishedDate, f => f.Date.Past(10));
-
+                .RuleFor(b => b.Isbn, f => string.Concat(f.Lorem.Random.Digits(10))) // previous random digits generation caused issues!
+                .RuleFor(b => b.PublishedDate, f => f.Date.Past(10))
+                .RuleFor(b => b.Price, f => f.Random.Decimal(6.00M,76.00M))
+                .RuleFor(b => b.Quantity, f => f.Random.Int(1, 100));
+            
             return faker.Generate(count);
         }
 
